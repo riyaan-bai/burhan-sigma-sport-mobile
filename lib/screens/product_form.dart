@@ -1,0 +1,282 @@
+// lib/screens/product_form.dart
+
+import 'package:burhan_sigma_sport/widgets/left_drawer.dart';
+import 'package:flutter/material.dart';
+
+class ProductFormPage extends StatefulWidget {
+  const ProductFormPage({super.key});
+
+  @override
+  State<ProductFormPage> createState() => _ProductFormPageState();
+}
+
+class _ProductFormPageState extends State<ProductFormPage> {
+  final _formKey = GlobalKey<FormState>();
+  String _name = "";
+  String brand = "";
+  int _price = 0;
+  String _description = "";
+  String _category = "Sportswear";
+  String _thumbnail = "";
+  bool _isFeatured = false;
+  final List<String> _categories = [
+    'Sportswear',
+    'Sports Shoes & Sandals',
+    'Sports Accessories',
+    'Sports Equipment',
+    'Health & Fitness Support',
+    'Protective Gear',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            'Create Product Form',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
+      ),
+      drawer: const LeftDrawer(),
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // === Nama Produk ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "e.g., Red T-Shirt, Blue Shoes",
+                    labelText: "Product Name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _name = value!;
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Product name can't be empty!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              // === Brand ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "e.g., Niken, Adadis",
+                    labelText: "Brand",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _name = value!;
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Brand can't be empty!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              // === Harga Produk ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "e.g. 150000",
+                    labelText: "Price",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _price = int.tryParse(value!) ?? 0;
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Price can't be empty!";
+                    }
+                    if (int.tryParse(value) == null) {
+                      return "Price must be number or digits!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              // === Deskripsi ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    hintText: "e.g. This is a red t-shirt made of cotton",
+                    labelText: "Description",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _description = value!;
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Description can't be empty!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              // === Kategori ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: "Category",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  value: _category,
+                  items: _categories
+                      .map(
+                        (cat) => DropdownMenuItem(value: cat, child: Text(cat)),
+                      )
+                      .toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _category = newValue!;
+                    });
+                  },
+                ),
+              ),
+              // === Thumbnail URL ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "e.g. https://example.com/image.jpg",
+                    labelText: "URL Thumbnail (optional)",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _thumbnail = value!;
+                    });
+                  },
+                ),
+              ),
+              // === Is Featured ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SwitchListTile(
+                  title: const Text("Is Featured Product"),
+                  value: _isFeatured,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _isFeatured = value;
+                    });
+                  },
+                  activeColor: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              // === Tombol Simpan ===
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        final String name = _name;
+                        final int price = _price;
+                        final String description = _description;
+                        final String category = _category;
+                        final String thumbnail = _thumbnail;
+                        final bool isFeatured = _isFeatured;
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Product has been saved!'),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Product Name: $name'),
+                                    Text('Brand: $brand'),
+                                    Text('Price: $price'),
+                                    Text('Description: $description'),
+                                    Text('Category: $category'),
+                                    Text('Thumbnail: $thumbnail'),
+                                    Text(
+                                      'Is Featured: ${isFeatured ? "Yes" : "No"}',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    _formKey.currentState!.reset();
+                                    setState(() {
+                                      _name = "";
+                                      _price = 0;
+                                      _description = "";
+                                      _category = "Sportswear";
+                                      _thumbnail = "";
+                                      _isFeatured = false;
+                                    });
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

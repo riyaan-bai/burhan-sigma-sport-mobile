@@ -19,3 +19,21 @@
 
 6. Jelaskan konsep "hot reload" di Flutter dan bagaimana bedanya dengan "hot restart"!
 -> Hot Reload adalah kondisi dimana Flutter menyuntikkan file kode yang telah diubah ke dalam Dart Virtual Machine yang sedang berjalan sehingga state aplikasi saat ini tetap terjaga tanpa me-restart aplikasi dan memungkinkan melihat perubahan UI secara instan. Sebaliknya, Hot Restart akan menghancurkan Dart VM yang ada dan membuat yang baru sehingga akan memulai ulang seluruh aplikasi dari awal. Hot Restart juga akan mengatur ulang semua state aplikasi kembali ke kondisi awal seolah-olah baru ditutup dan membuka kembali aplikasi tersebut.
+
+## Tugas 8
+
+1. Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement() pada Flutter. Dalam kasus apa sebaiknya masing-masing digunakan pada aplikasi Football Shop kamu?
+
+-> Navigator.push() berfungsi untuk menambahkan halaman baru di atas tumpukan navigasi sehingga halaman lama masih ada di bawahnya dan pengguna bisa menekan tombol "kembali". Sebaliknya, Navigator.pushReplacement() berfungsi untuk mengganti halaman saat ini dengan halaman baru sehingga halaman sebelumnya dihapus dari tumpukan dan pengguna tidak bisa kembali. Pada aplikasi saya, push() digunakan saat menekan tombol "Create Product" untuk membuka formulir sehingga pengguna bisa kembali ke halaman utama. Sedangkan pushReplacement() digunakan saat menekan "Halaman Utama" dari drawer untuk mencegah halaman utama menumpuk di atas dirinya sendiri.
+
+2. Bagaimana kamu memanfaatkan hierarchy widget seperti Scaffold, AppBar, dan Drawer untuk membangun struktur halaman yang konsisten di seluruh aplikasi?
+
+-> Saya memanfaatkan hirarki widget dengan Scaffold yang digunakan sebagai kerangka dasar untuk setiap halaman yang menyediakan slot standar untuk elemen umum seperti appBar, body, dan drawer sehingga semua halaman memiliki struktur dasar yang sama. Kemudian, AppBar ditempatkan di dalam slot appBar milik Scaffold dengan properti yang konsisten di setiap halaman. Terakhir, Drawer ditempatkan ke dalam slot drawer milik Scaffold dengan satu file agar navigasi selalu identik dan mudah ditemukan.
+
+3.  Dalam konteks desain antarmuka, apa kelebihan menggunakan layout widget seperti Padding, SingleChildScrollView, dan ListView saat menampilkan elemen-elemen form? Berikan contoh penggunaannya dari aplikasi kamu.
+
+-> Kelebihan utama layout widget adalah menciptakan antarmuka formulir yang rapi, responsif, dan mudah digunakan. Padding digunakan untuk memberi space antar elemen input seperti TextFormField agar tidak menempel di tepi layar. SingleChildScrollView digunakan untuk membungkus seluruh Form serta memastikan semua field tetap bisa diisi dan di-scroll bahkan saat keyboard virtual muncul di layar kecil. ListView berfungsi menyusun semua elemen input dan tombol secara vertikal dengan teratur.
+
+4.Bagaimana kamu menyesuaikan warna tema agar aplikasi Football Shop memiliki identitas visual yang konsisten dengan brand toko?
+
+-> Penyesuaian warna tema dilakukan secara terpusat di dalam widget MaterialApp pada berkas main.dart. Di dalam properti theme ThemeData diatur dan colorScheme juga didefinisikan. Untuk aplikasi saya, saya menggunakan ColorScheme.fromSwatch(primarySwatch: Colors.blue) yang menetapkan warna biru khas aplikasi sebagai warna primer. Warna ini kemudian secara otomatis digunakan oleh widget lain seperti AppBar dan DrawerHeader, sehingga menciptakan identitas visual yang konsisten.
