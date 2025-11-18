@@ -83,7 +83,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "e.g., Nike, Adidas",
+                    hintText: "e.g., Niken, Adadis",
                     labelText: "Brand",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -232,7 +232,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       if (_formKey.currentState!.validate()) {
                         // Kirim ke Django dan tunggu respons
                         final response = await request.postJson(
-                          "http://localhost:8000/create-flutter/",
+                          "https://riyaan-baihaqi-burhansigmasport.pbp.cs.ui.ac.id/create-flutter/",
                           jsonEncode(<String, dynamic>{
                             'name': _name,
                             'brand': _brand,

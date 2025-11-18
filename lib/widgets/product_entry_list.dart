@@ -10,7 +10,8 @@ class ProductEntryPage extends StatefulWidget {
   final String requestUrl;
   const ProductEntryPage({
     super.key,
-    this.requestUrl = 'http://localhost:8000/json/',
+    this.requestUrl =
+        'https://riyaan-baihaqi-burhansigmasport.pbp.cs.ui.ac.id/json/',
   });
 
   @override

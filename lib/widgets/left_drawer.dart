@@ -3,16 +3,15 @@ import 'package:burhan_sigma_sport/screens/product_form.dart';
 import 'package:burhan_sigma_sport/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:burhan_sigma_sport/widgets/product_entry_list.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart'; 
-import 'package:provider/provider.dart'; 
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final request = context
-        .watch<CookieRequest>();
+    final request = context.watch<CookieRequest>();
 
     return Drawer(
       child: ListView(
@@ -87,7 +86,7 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Logout'),
             onTap: () async {
               final response = await request.logout(
-                "http://localhost:8000/auth/logout/",
+                "https://riyaan-baihaqi-burhansigmasport.pbp.cs.ui.ac.id/auth/logout/",
               );
               String message = response["message"];
               if (context.mounted) {
