@@ -1,5 +1,9 @@
 import 'package:burhan_sigma_sport/screens/product_form.dart';
+import 'package:burhan_sigma_sport/widgets/product_entry_list.dart';
 import 'package:flutter/material.dart';
+import 'package:burhan_sigma_sport/screens/login.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ItemCard extends StatelessWidget {
   final ItemHomepage item;
@@ -8,11 +12,12 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Material(
       color: item.color,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           // Tampilkan SnackBar
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -26,6 +31,32 @@ class ItemCard extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => const ProductFormPage()),
             );
+          } else if (item.name == "See Products") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+            );
+          } else if (item.name == "Logout") {
+            final response = await request.logout(
+              "http://localhost:8000/auth/logout/",
+            );
+            String message = response["message"];
+            if (context.mounted) {
+              if (response['status']) {
+                String uname = response["username"];
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("$message See you again, $uname.")),
+                );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              } else {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(message)));
+              }
+            }
           }
         },
         child: Container(

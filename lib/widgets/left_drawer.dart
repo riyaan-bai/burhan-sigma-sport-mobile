@@ -1,6 +1,7 @@
 import 'package:burhan_sigma_sport/screens/menu.dart';
 import 'package:burhan_sigma_sport/screens/product_form.dart';
 import 'package:flutter/material.dart';
+import 'package:burhan_sigma_sport/widgets/product_entry_list.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -69,6 +70,17 @@ class LeftDrawer extends StatelessWidget {
                 ),
               );
             },
+          ),
+          ListTile(
+              leading: const Icon(Icons.add_reaction_rounded),
+              title: const Text('Product List'),
+              onTap: () {
+                  // Route to news list page
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+                  );
+              },
           ),
         ],
       ),
