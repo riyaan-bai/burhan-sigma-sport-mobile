@@ -232,7 +232,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       if (_formKey.currentState!.validate()) {
                         // Kirim ke Django dan tunggu respons
                         final response = await request.postJson(
-                          "https://riyaan-baihaqi-burhansigmasport.pbp.cs.ui.ac.id/create-flutter/",
+                          "http://localhost:8000/create-flutter/",
                           jsonEncode(<String, dynamic>{
                             'name': _name,
                             'brand': _brand,

@@ -37,7 +37,7 @@ class ItemCard extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => const ProductEntryPage(
                   requestUrl:
-                      'https://riyaan-baihaqi-burhansigmasport.pbp.cs.ui.ac.id/json/', // URL untuk semua produk
+                      'http://localhost:8000/json/', // URL untuk semua produk
                 ),
               ),
             );
@@ -46,14 +46,13 @@ class ItemCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const ProductEntryPage(
-                  requestUrl:
-                      'https://riyaan-baihaqi-burhansigmasport.pbp.cs.ui.ac.id/json-my/',
+                  requestUrl: 'http://localhost:8000/json-my/',
                 ),
               ),
             );
           } else if (item.name == "Logout") {
             final response = await request.logout(
-              "https://riyaan-baihaqi-burhansigmasport.pbp.cs.ui.ac.id/auth/logout/",
+              "http://localhost:8000/auth/logout/",
             );
             String message = response["message"];
             if (context.mounted) {
