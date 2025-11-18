@@ -31,10 +31,25 @@ class ItemCard extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => const ProductFormPage()),
             );
-          } else if (item.name == "See Products") {
+          } else if (item.name == "All Products") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+              MaterialPageRoute(
+                builder: (context) => const ProductEntryPage(
+                  requestUrl:
+                      'http://localhost:8000/json/', // URL untuk semua produk
+                ),
+              ),
+            );
+          } else if (item.name == "My Products") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProductEntryPage(
+                  requestUrl:
+                      'http://localhost:8000/json-my/',
+                ),
+              ),
             );
           } else if (item.name == "Logout") {
             final response = await request.logout(

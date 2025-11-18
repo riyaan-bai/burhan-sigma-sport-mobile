@@ -7,7 +7,11 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
 class ProductEntryPage extends StatefulWidget {
-  const ProductEntryPage({super.key});
+  final String requestUrl;
+  const ProductEntryPage({
+    super.key,
+    this.requestUrl = 'http://localhost:8000/json/',
+  });
 
   @override
   State<ProductEntryPage> createState() => _ProductEntryPageState();
@@ -15,7 +19,7 @@ class ProductEntryPage extends StatefulWidget {
 
 class _ProductEntryPageState extends State<ProductEntryPage> {
   Future<List<ProductEntry>> fetchProduct(CookieRequest request) async {
-    final response = await request.get('http://localhost:8000/json/');
+    final response = await request.get(widget.requestUrl);
 
     // Melakukan decode response menjadi bentuk json
     var data = response;
@@ -34,9 +38,7 @@ class _ProductEntryPageState extends State<ProductEntryPage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Product Entry List'),
-      ),
+      appBar: AppBar(title: const Text('Product Entry List')),
       drawer: const LeftDrawer(),
       body: FutureBuilder(
         future: fetchProduct(request),
@@ -63,15 +65,12 @@ class _ProductEntryPageState extends State<ProductEntryPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProductDetailPage(
-                            product: snapshot.data![index],
-                          ),
+                          builder: (context) =>
+                              ProductDetailPage(product: snapshot.data![index]),
                         ),
                       );
                     },
-                    child: ProductEntryCard(
-                      product: snapshot.data![index],
-                    ),
+                    child: ProductEntryCard(product: snapshot.data![index]),
                   );
                 },
               );

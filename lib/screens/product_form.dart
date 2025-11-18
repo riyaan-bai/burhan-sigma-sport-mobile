@@ -77,7 +77,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   },
                 ),
               ),
-              
+
               // === Brand ===
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -231,16 +231,14 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         // Kirim ke Django dan tunggu respons
-                        // Ganti URL dengan endpoint create-flutter Anda
                         final response = await request.postJson(
-                          "http://10.0.2.2:8000/create-flutter/",
+                          "http://localhost:8000/create-flutter/",
                           jsonEncode(<String, dynamic>{
                             'name': _name,
                             'brand': _brand,
                             'price': _price.toString(),
                             'description': _description,
-                            // Mengubah ke lowercase agar sesuai key di models.py Django
-                            'category': _category.toLowerCase(), 
+                            'category': _category.toLowerCase(),
                             'thumbnail': _thumbnail,
                             'is_featured': _isFeatured,
                           }),
@@ -248,19 +246,38 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
                         if (context.mounted) {
                           if (response['status'] == 'success') {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Produk baru berhasil disimpan!"),
-                              ),
-                            );
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => MyHomePage()),
+                            // === GANTI DARI SNACKBAR KE SHOWDIALOG DI SINI ===
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text('Product Saved'),
+                                  content: const Text(
+                                    'Produk baru berhasil disimpan!',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context); // Tutup dialog
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MyHomePage(),
+                                          ),
+                                        ); // Kembali ke Home
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text("Terdapat kesalahan, silakan coba lagi."),
+                                content: Text(
+                                  "Terdapat kesalahan, silakan coba lagi.",
+                                ),
                               ),
                             );
                           }

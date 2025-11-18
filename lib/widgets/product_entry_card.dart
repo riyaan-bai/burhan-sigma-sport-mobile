@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:burhan_sigma_sport/models/product_entry.dart'; // Pastikan path import model sesuai
+import 'package:burhan_sigma_sport/models/product_entry.dart';
+import 'package:burhan_sigma_sport/screens/product_detail.dart';
 
 class ProductEntryCard extends StatelessWidget {
   final ProductEntry product;
@@ -13,10 +14,14 @@ class ProductEntryCard extends StatelessWidget {
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       child: InkWell(
+        borderRadius: BorderRadius.circular(12.0),
         onTap: () {
-          // Tampilkan pesan detail saat diklik (atau navigasi ke detail page nanti)
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Kamu menekan produk ${product.name}")),
+          // Logika Navigasi ke ProductDetailPage
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailPage(product: product),
+            ),
           );
         },
         child: Padding(
@@ -24,9 +29,7 @@ class ProductEntryCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // --- Bagian Thumbnail Gambar ---
-              // Menggunakan logika proxy seperti di tutorial jika diperlukan
-              // atau Image.network biasa jika URL valid & CORS aman.
+              // Bagian Thumbnail (Sama seperti sebelumnya)
               if (product.thumbnail.isNotEmpty)
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
@@ -69,7 +72,7 @@ class ProductEntryCard extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              // --- Bagian Judul & Badge Featured ---
+              // Bagian Judul & Badge Featured
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -106,15 +109,16 @@ class ProductEntryCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              // --- Bagian Harga & Kategori ---
+              // Bagian Harga & Kategori
               Row(
                 children: [
                   Text(
                     "Rp ${product.price}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
-                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w600,
+                      color: Colors
+                          .green, // Saya ubah ke hijau agar lebih kontras untuk harga
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -138,7 +142,7 @@ class ProductEntryCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              // --- Bagian Deskripsi (Preview) ---
+              // Bagian Deskripsi (Preview)
               Text(
                 product.description,
                 maxLines: 2,
@@ -148,14 +152,19 @@ class ProductEntryCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              // --- Bagian Brand ---
+              // Bagian Brand
               Row(
                 children: [
-                  const Icon(Icons.store, size: 16, color: Colors.grey),
-                  const SizedBox(width: 4),
+                  Icon(
+                    Icons.branding_watermark,
+                    size: 16,
+                    color: Colors.grey[700],
+                  ),
+
+                  const SizedBox(width: 6),
                   Text(
                     product.brand,
-                    style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(color: Colors.grey[700], fontSize: 12),
                   ),
                 ],
               ),
